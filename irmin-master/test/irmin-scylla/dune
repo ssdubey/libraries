@@ -1,0 +1,26 @@
+(library
+ (name      test_scylla)
+ (modules   test_scylla)
+ (libraries irmin-test irmin-scylla))
+
+(executable
+ (name      test)
+ (modules   test)
+ (libraries digestif.ocaml test_scylla)
+ (flags (-g))
+ (link_flags (-cclib -lstdc++ -cclib -lssl -cclib -lcrypto)))
+
+(rule
+ (alias    runtest)
+ (package irmin-scylla)
+ (action  (run ./test.exe -q --color=always)))
+
+(executable
+ (name      bench)
+ (modules   bench)
+ (libraries irmin-scylla irmin-test.bench)
+ (link_flags (-cclib -lstdc++ -cclib -lssl -cclib -lcrypto)))
+
+(rule
+ (alias   bench)
+ (action (run ./bench.exe)))

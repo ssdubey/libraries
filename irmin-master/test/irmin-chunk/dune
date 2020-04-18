@@ -1,0 +1,14 @@
+(library
+ (name      test_chunk)
+ (modules   test_chunk)
+ (libraries irmin-test irmin-chunk ))		;irmin-mem is a required library here.
+
+(executable
+ (name      test)
+ (modules   test)
+ (libraries digestif.c test_chunk))
+
+(rule
+ (alias    runtest)
+ (package irmin-chunk)
+ (action  (run ./test.exe -q --color=always)))
